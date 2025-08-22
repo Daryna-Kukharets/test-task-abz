@@ -97,18 +97,6 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
         photo: formData.photo!,
       };
 
-       console.log("Submitting user data:", {
-      ...userData,
-      photo: userData.photo
-        ? {
-            name: userData.photo.name,
-            size: userData.photo.size,
-            type: userData.photo.type,
-          }
-        : null,
-    });
-
-
       const response = await registerUser(userData, token);
 
       if (response.success) {
@@ -197,7 +185,9 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
       <div className="form__button">
         <Button
           name="Sign up"
-          onClick={(e) => handleSubmit(e as React.MouseEvent<HTMLButtonElement>)}
+          onClick={(e) =>
+            handleSubmit(e as React.MouseEvent<HTMLButtonElement>)
+          }
           disabled={!isFormValid()}
         />
       </div>

@@ -1,27 +1,36 @@
 type Props = {
   name: string;
   width?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  onClick?: (
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => void;
   disabled?: boolean;
   href?: string;
-}
+};
 
-export const Button: React.FC<Props> = ({ 
-  name, 
-  width = '100px',
+export const Button: React.FC<Props> = ({
+  name,
+  width = "100px",
   onClick,
   disabled,
-  href
+  href,
 }) => {
-  return (
+  return href ? (
     <a
-      href={href} 
-      type="button" 
-      className={`button ${disabled ? "button--disabled" : ""}`}
-      style={{width}}
-      onClick={onClick}
+      href={href}
+      type="button"
+      className="button"
     >
       {name}
     </a>
+  ) : (
+    <button
+      type="button"
+      className={`button ${disabled ? "button--disabled" : ""}`}
+      style={{ width }}
+      onClick={onClick}
+    >
+      {name}
+    </button>
   );
 };

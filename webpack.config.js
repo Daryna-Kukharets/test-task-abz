@@ -52,6 +52,7 @@ module.exports = (env, argv) => {
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: "./public/index.html",
+        favicon: "./src/assets/icons/favicon.svg",
       }),
     ],
     devServer: {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form } from "../../components/Form/Form";
+import success from "../../assets/success.svg"
 
 type Props = {
   onUserRegistered: () => void;
@@ -18,7 +19,7 @@ export const FormSection: React.FC<Props> = ({ onUserRegistered }) => {
         {isRegistered ? (
           <>
           <h1 className="formSection__title">User successfully registered</h1>
-          <img src="images/success.svg" alt="success" className="formSection__img"/>
+          <img src={success} alt="success" className="formSection__img"/>
           </>
         ) : (
           <>

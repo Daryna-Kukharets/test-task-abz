@@ -1,0 +1,24 @@
+@use "../../styles/utils" as *;
+
+.header {
+  background-color: $white-color;
+
+  &__box {
+    padding-block: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include container;
+  }
+
+  &__logo {
+    width: 104px;
+    height: 26px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 10px;
+  }
+}

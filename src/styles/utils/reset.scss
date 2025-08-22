@@ -1,0 +1,31 @@
+@use "./colors" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  scroll-behavior: smooth;
+  margin: 0;
+  height: 100%;
+  background-color: $background-color;
+  overflow-x: hidden;
+}
+
+h1,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}

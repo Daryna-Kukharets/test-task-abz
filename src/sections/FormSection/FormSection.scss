@@ -1,0 +1,19 @@
+@use "../../styles/utils" as *;
+
+.formSection {
+   @include container;
+  
+  &__box {
+    margin-top: 140px;
+    margin-bottom: 100px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__img {
+    display: block;
+    margin: 50px auto;
+  }
+}

@@ -1,0 +1,14 @@
+@use "./extends" as *;
+
+h1 {
+  @extend %h1;
+}
+
+p,
+a,
+button,
+label,
+input,
+span {
+  @extend %p;
+}

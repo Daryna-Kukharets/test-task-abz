@@ -1,0 +1,24 @@
+  @use "../../styles/utils" as *;
+
+  .button {
+    border: none;
+    background-color: $yellow-color;
+    width: 100px;
+    height: 34px;
+    border-radius: 80px;
+    cursor: pointer;
+    transition: background-color $effect-duration ease;
+
+    &:hover {
+      background-color: $hover-yellow-color;
+    }
+
+    &--disabled {
+      background-color: $disabled-color;
+      color: $disabled-text-color;
+
+      &:hover {
+        background-color: $disabled-color;
+      }
+    }
+  }

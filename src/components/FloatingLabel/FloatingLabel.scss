@@ -1,0 +1,64 @@
+@use "../../styles/utils" as *;
+
+.floatingLabel {
+  position: relative;
+  width: 100%;
+
+  &__input {
+    cursor: pointer;
+    outline: none;
+    height: 54px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    width: 100%;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    transition: all $effect-duration ease;
+    background-color: transparent;
+    color: $text-color;
+
+    &:focus {
+      border-color: $text-color;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      background-color: transparent;
+      -webkit-text-fill-color: $text-color;
+      -webkit-box-shadow: none;
+      transition: background-color 5000s ease 0s;
+    }
+
+    &--error {
+      border: 2px solid $red-color;
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all $effect-duration ease;
+    color: $placeholder-color;
+
+    &--active {
+      top: -7px;
+      background-color: $background-color;
+      padding-inline: 4px;
+      transform: translateY(0);
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    &--focus {
+      color: $text-color;
+    }
+
+    &--error {
+      color: $red-color;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@use "../../styles/utils" as *;
+
+.form {
+  margin-top: 50px;
+
+  @include on-tablet {
+    width: 380px;
+    margin: 50px auto;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  &__input-box {
+    position: relative;
+  }
+
+  &__phone {
+    font-size: 12px;
+    line-height: 14px;
+    color: $placeholder-color;
+    padding-left: 16px;
+    padding-top: 4px;
+  }
+
+  &__button {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+    &__error {
+    color: $red-color;
+    font-size: 12px;
+    line-height: 14px;
+    position: absolute;
+    bottom: -18px;
+    left: 16px;
+  }
+}

@@ -1,0 +1,19 @@
+@use "../../styles/utils" as *;
+
+.usersSection {
+  @include container;
+  
+  &__box {
+    margin-top: 140px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__button {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+  }
+}

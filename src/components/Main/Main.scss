@@ -1,29 +1,38 @@
 @use "../../styles/utils" as *;
 
 .main {
-  background-image: url("../assets/mainSection-bg-mobile.png");
-  width: 100%;
   height: 500px;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: end;
 
   @include on-tablet {
-    background-image: url("../assets/mainSection-bg-tablet.png");
     align-items: center;
   }
 
   @include on-desktop {
-    background-image: url("../assets/mainSection-bg-desktop.png");
     height: 650px;
-
-    @include container;
   }
 
-  @include on-large-desktop {
-    background-image: url("../assets/mainSection-bg-large-desktop.png");
+  &__img {
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    top: 60px;
+    width: 100%;
+    height: 500px;
+
+    @include on-desktop {
+      height: 650px;
+      left: 50%;
+      transform: translate(-50%);
+    }
+
+    @include on-large-desktop {
+      @include container;
+    }
   }
 
   &__box {

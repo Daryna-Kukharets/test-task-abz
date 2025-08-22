@@ -18,7 +18,6 @@ export const Button: React.FC<Props> = ({
   return href ? (
     <a
       href={href}
-      type="button"
       className="button"
     >
       {name}

@@ -13,7 +13,7 @@ export const Main = () => {
           Development keeps evolving.
         </p>
         <div className="main__button">
-          <Button name="Sign up" href="#registartion" />
+          <Button name="Sign up" href="#registration" />
         </div>
       </div>
     </div>

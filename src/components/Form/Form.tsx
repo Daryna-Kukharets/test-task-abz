@@ -11,14 +11,16 @@ import { validateField } from "../../helper/validateForm";
 type Props = {
   onUserRegistered: () => void;
 };
+
 export const Form: React.FC<Props> = ({ onUserRegistered }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    positionId: "",
+    positionId: "1",
     photo: null as File | null,
   });
+  const [serverError, setServerError] = useState<string>("");
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [touchedFields, setTouchedFields] = useState<{
@@ -70,6 +72,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setServerError(""); // очистити глобальну помилку
 
     setTouchedFields({
       name: true,
@@ -80,38 +83,104 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     });
 
     const formValid = await checkFormValidity();
-
-    if (!formValid) {
-      return;
-    }
+    if (!formValid) return;
 
     try {
       const token = await getToken();
 
+      const phoneDigits = (formData.phone || "").replace(/[^\d]/g, ""); // ✅ лише цифри
       const userData = {
         name: formData.name,
         email: formData.email,
-        phone: "+" + formData.phone.replace(/\D/g, ""),
+        phone: `+${phoneDigits}`,
         position_id: Number(formData.positionId),
         photo: formData.photo!,
       };
 
       const response = await registerUser(userData, token);
 
-      if (response.success) {
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          positionId: "1",
-          photo: null,
+      // ✅ випадок, коли бекенд повертає success=false з fails
+      if (!response?.success) {
+        const mapKeys: Record<string, string> = { position_id: "positionId" };
+        const fails = (response?.fails ?? {}) as Record<string, string[]>;
+        const newErrors: Record<string, string> = {};
+
+        Object.entries(fails).forEach(([key, msgs]) => {
+          const clientKey = mapKeys[key] || key;
+          newErrors[clientKey] =
+            msgs?.[0] || response?.message || "Validation failed";
         });
-        setErrors({});
-        setTouchedFields({});
-        onUserRegistered?.();
+
+        if (Object.keys(newErrors).length) {
+          setErrors((prev) => ({ ...prev, ...newErrors }));
+          setTouchedFields((prev) => ({
+            ...prev,
+            ...Object.keys(newErrors).reduce(
+              (acc, k) => (((acc as any)[k] = true), acc),
+              {} as Record<string, boolean>
+            ),
+          }));
+          const firstKey = Object.keys(newErrors)[0];
+          if (firstKey) {
+            const el = document.querySelector(
+              `[name="${firstKey}"]`
+            ) as HTMLElement | null;
+            el?.focus();
+          }
+        }
+
+        setServerError(response?.message || "Validation failed");
+        return;
       }
+
+      // ✅ успіх
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        positionId: "1",
+        photo: null,
+      });
+      setErrors({});
+      setTouchedFields({});
+      onUserRegistered?.();
     } catch (error: any) {
-      alert(error.message || "Something went wrong. Try again.");
+      // ✅ мережеві/несподівані помилки або 4xx/5xx з тілом { message, fails }
+      let message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong. Try again.";
+      const fails = error?.response?.data?.fails as
+        | Record<string, string[]>
+        | undefined;
+
+      if (fails) {
+        const mapKeys: Record<string, string> = { position_id: "positionId" };
+        const newErrors: Record<string, string> = {};
+        Object.entries(fails).forEach(([key, msgs]) => {
+          const clientKey = mapKeys[key] || key;
+          newErrors[clientKey] = msgs?.[0] || message;
+        });
+        if (Object.keys(newErrors).length) {
+          setErrors((prev) => ({ ...prev, ...newErrors }));
+          setTouchedFields((prev) => ({
+            ...prev,
+            ...Object.keys(newErrors).reduce(
+              (acc, k) => (((acc as any)[k] = true), acc),
+              {} as Record<string, boolean>
+            ),
+          }));
+          const firstKey = Object.keys(newErrors)[0];
+          if (firstKey) {
+            const el = document.querySelector(
+              `[name="${firstKey}"]`
+            ) as HTMLElement | null;
+            el?.focus();
+          }
+        }
+      }
+
+      setServerError(message);
     }
   };
 
@@ -125,6 +194,11 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
 
   return (
     <form encType="multipart/form-data" className="form">
+      {serverError && (
+        <div className="form__server-error" role="alert" aria-live="assertive">
+          {serverError}
+        </div>
+      )}
       <div className="form__inputs">
         <div className="form__input-box">
           <FloatingLabel
@@ -184,7 +258,9 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
       <div className="form__button">
         <Button
           name="Sign up"
-          onClick={(e) => handleSubmit(e as React.MouseEvent<HTMLButtonElement>)}
+          onClick={(e) =>
+            handleSubmit(e as React.MouseEvent<HTMLButtonElement>)
+          }
           disabled={!isFormValid()}
         />
       </div>

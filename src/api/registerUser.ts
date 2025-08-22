@@ -10,6 +10,7 @@ export interface RegisterUserData {
 
 export interface RegisterUserResponse extends ApiResponse<{ user_id: number }> {
   message: string;
+  fails: Record<string, string[]>
 }
 
 export const registerUser = async (

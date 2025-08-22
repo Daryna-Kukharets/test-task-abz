@@ -6,8 +6,11 @@
   box-sizing: border-box;
 }
 
-body {
+html {
   scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
   height: 100%;
   background-color: $background-color;

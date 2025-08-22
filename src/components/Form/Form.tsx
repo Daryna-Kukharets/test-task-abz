@@ -35,16 +35,14 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
   const checkFormValidity = async () => {
     const fields = ["name", "email", "phone", "photo"];
     let valid = true;
-    const newErrors: { [key: string]: string } = {};
 
     for (const field of fields) {
       const value = (formData as any)[field];
       const error = await validateField(field, value);
-      newErrors[field] = error;
+      setErrors((prev) => ({ ...prev, [field]: error }));
       if (error) valid = false;
     }
 
-    setErrors(newErrors);
     return valid;
   };
 
@@ -98,6 +96,18 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
         position_id: Number(formData.positionId),
         photo: formData.photo!,
       };
+
+       console.log("Submitting user data:", {
+      ...userData,
+      photo: userData.photo
+        ? {
+            name: userData.photo.name,
+            size: userData.photo.size,
+            type: userData.photo.type,
+          }
+        : null,
+    });
+
 
       const response = await registerUser(userData, token);
 
@@ -187,9 +197,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
       <div className="form__button">
         <Button
           name="Sign up"
-          onClick={(e) =>
-            handleSubmit(e as React.MouseEvent<HTMLButtonElement>)
-          }
+          onClick={(e) => handleSubmit(e as React.MouseEvent<HTMLButtonElement>)}
           disabled={!isFormValid()}
         />
       </div>

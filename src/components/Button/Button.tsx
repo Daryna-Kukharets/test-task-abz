@@ -1,8 +1,9 @@
 type Props = {
   name: string;
   width?: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
   disabled?: boolean;
+  href?: string;
 }
 
 export const Button: React.FC<Props> = ({ 
@@ -10,15 +11,17 @@ export const Button: React.FC<Props> = ({
   width = '100px',
   onClick,
   disabled,
+  href
 }) => {
   return (
-    <button 
+    <a
+      href={href} 
       type="button" 
       className={`button ${disabled ? "button--disabled" : ""}`}
       style={{width}}
       onClick={onClick}
     >
       {name}
-    </button>
+    </a>
   );
 };

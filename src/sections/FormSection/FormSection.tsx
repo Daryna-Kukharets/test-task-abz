@@ -11,14 +11,14 @@ export const FormSection: React.FC<Props> = ({ onUserRegistered }) => {
     setIsRegistered(true);
     onUserRegistered();
   };
-  
+
   return (
     <section id="registration" className="formSection">
       <div className="formSection__box">
         {isRegistered ? (
           <>
           <h1 className="formSection__title">User successfully registered</h1>
-          <img src="/images/success.svg" alt="success" className="formSection__img"/>
+          <img src="images/success.svg" alt="success" className="formSection__img"/>
           </>
         ) : (
           <>

@@ -6,6 +6,9 @@
     width: 100px;
     height: 34px;
     border-radius: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     transition: background-color $effect-duration ease;
 

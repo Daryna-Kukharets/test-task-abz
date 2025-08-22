@@ -1,11 +1,6 @@
 import { Button } from "../Button/Button";
 
 export const Main = () => {
-  const scrollToReg = () => {
-    const usersSection = document.querySelector("#registration");
-    usersSection?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="main">
       <div className="main__box">
@@ -18,7 +13,7 @@ export const Main = () => {
           Development keeps evolving.
         </p>
         <div className="main__button">
-          <Button name="Sign up" onClick={scrollToReg} />
+          <Button name="Sign up" href="#registartion" />
         </div>
       </div>
     </div>

@@ -6,12 +6,11 @@ import { Button } from "../Button/Button";
 import { getToken } from "../../api/getToken";
 import { registerUser } from "../../api/registerUser";
 import { formatPhone } from "../../helper/formatPhone";
-import { validateField } from "../../helper/validateField";
+import { validateField } from "../../helper/validateForm";
 
 type Props = {
   onUserRegistered: () => void;
 };
-
 export const Form: React.FC<Props> = ({ onUserRegistered }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -39,38 +38,25 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     for (const field of fields) {
       const value = (formData as any)[field];
       const error = await validateField(field, value);
-
       setErrors((prev) => ({ ...prev, [field]: error }));
-
-      if (error) {
-        valid = false;
-      }
+      if (error) valid = false;
     }
 
     return valid;
   };
 
   const handleChange = async (name: string, value: string) => {
-    if (name === "phone") {
-      const formatted = formatPhone(value);
-      setFormData((prev) => ({ ...prev, phone: formatted }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    const formattedValue = name === "phone" ? formatPhone(value) : value;
 
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }));
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
 
-    const error = await validateField(
-      name,
-      name === "phone"
-        ? formatPhone(value)
-        : setErrors((prev) => ({ ...prev, [name]: error }))
-    );
+    const error = await validateField(name, formattedValue);
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   const handlePhotoChange = async (file: File | null) => {
     setFormData((prev) => ({ ...prev, photo: file }));
-
     setTouchedFields((prev) => ({ ...prev, photo: true }));
 
     const error = await validateField("photo", file);
@@ -198,7 +184,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
       <div className="form__button">
         <Button
           name="Sign up"
-          onClick={handleSubmit}
+          onClick={(e) => handleSubmit(e as React.MouseEvent<HTMLButtonElement>)}
           disabled={!isFormValid()}
         />
       </div>

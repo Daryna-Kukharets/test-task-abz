@@ -1,8 +1,8 @@
 import { Button } from "../Button/Button";
-import mobile from "../../assets/mainSection-bg-mobile.png";
-import tablet from "../../assets/mainSection-bg-tablet.png";
-import desktop from "../../assets/mainSection-bg-desktop.png";
-import largeDesktop from "../../assets/mainSection-bg-large-desktop.png";
+import mobile from "../../assets/mainSection-bg-mobile.jpg";
+import tablet from "../../assets/mainSection-bg-tablet.jpg";
+import desktop from "../../assets/mainSection-bg-desktop.jpg";
+import largeDesktop from "../../assets/mainSection-bg-large-desktop.jpg";
 
 export const Main = () => {
   return (
@@ -27,7 +27,7 @@ export const Main = () => {
           src={mobile}
           alt="background"
           className="main__img"
-          loading="lazy"
+          fetchPriority="high"
         />
       </picture>
 

@@ -7,6 +7,7 @@ import { getToken } from "../../api/getToken";
 import { registerUser } from "../../api/registerUser";
 import { formatPhone } from "../../helper/formatPhone";
 import { validateField } from "../../helper/validateForm";
+import { Loader } from "../Loader/Loader";
 
 type Props = {
   onUserRegistered: () => void;
@@ -25,6 +26,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
   const [touchedFields, setTouchedFields] = useState<{
     [key: string]: boolean;
   }>({});
+  const [loading, setLoading] = useState(false);
 
   const handleFocus = () => {
     if (!formData.phone) {
@@ -47,7 +49,8 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
   };
 
   const handleChange = async (name: string, value: string) => {
-    const formattedValue = name === "phone" ? formatPhone(value) : value;
+    const formattedValue =
+      name === "phone" ? formatPhone(value).withDashes : value;
 
     setFormData((prev) => ({ ...prev, [name]: formattedValue }));
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
@@ -87,6 +90,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     }
 
     try {
+      setLoading(true);
       const token = await getToken();
 
       const userData = {
@@ -113,6 +117,8 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
       }
     } catch (error: any) {
       alert(error.message || "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,7 +130,9 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     });
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <form encType="multipart/form-data" className="form">
       <div className="form__inputs">
         <div className="form__input-box">
@@ -188,7 +196,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
           onClick={(e) =>
             handleSubmit(e as React.MouseEvent<HTMLButtonElement>)
           }
-          disabled={!isFormValid()}
+          disabled={!isFormValid() || loading}
         />
       </div>
     </form>

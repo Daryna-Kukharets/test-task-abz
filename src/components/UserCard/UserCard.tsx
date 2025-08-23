@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { User } from "../../api/users";
+import { formatPhone } from "../../helper/formatPhone";
 
 type Props = {
   user: User;
@@ -51,7 +52,7 @@ export const UserCard: React.FC<Props> = ({ user }) => {
       <div className="userCard__info-box">
         <p className="userCard__info">{position}</p>
         {renderTooltip(email, "email")}
-        <p className="userCard__info">{phone}</p>
+        <p className="userCard__info">{formatPhone(phone).withoutDashes}</p>
       </div>
     </div>
   );

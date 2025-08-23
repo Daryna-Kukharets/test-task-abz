@@ -11,20 +11,35 @@ export const formatPhone = (value: string) => {
 
   digits = digits.slice(0, 9);
 
-  let formatted = "+38 (0";
+  let withDashes = "+38 (0";
 
   if (digits.length > 0) {
-    formatted += digits.slice(0, 2);
+    withDashes += digits.slice(0, 2);
   }
   if (digits.length >= 3) {
-    formatted += ") " + digits.slice(2, 5);
+    withDashes += ") " + digits.slice(2, 5);
   }
   if (digits.length >= 6) {
-    formatted += " - " + digits.slice(5, 7);
+    withDashes += " - " + digits.slice(5, 7);
   }
   if (digits.length >= 8) {
-    formatted += " - " + digits.slice(7, 9);
+    withDashes += " - " + digits.slice(7, 9);
   }
 
-  return formatted;
+  let withoutDashes = "+38 (0";
+
+  if (digits.length > 0) {
+    withoutDashes += digits.slice(0, 2);
+  }
+  if (digits.length >= 3) {
+    withoutDashes += ") " + digits.slice(2, 5);
+  }
+  if (digits.length >= 6) {
+    withoutDashes += " " + digits.slice(5, 7);
+  }
+  if (digits.length >= 8) {
+    withoutDashes += " " + digits.slice(7, 9);
+  }
+
+  return { withDashes, withoutDashes };
 };

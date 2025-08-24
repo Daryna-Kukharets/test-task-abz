@@ -1,8 +1,8 @@
 @use "../../styles/utils" as *;
 
 .formSection {
-   @include container;
-  
+  @include container;
+
   &__box {
     margin-top: 140px;
     margin-bottom: 100px;

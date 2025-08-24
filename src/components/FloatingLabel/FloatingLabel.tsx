@@ -22,6 +22,7 @@ export const FloatingLabel: React.FC<Props> = ({
 
   const handleFocus = () => {
     setIsFocused(true);
+
     if (onFocus) {
       onFocus(name);
     }

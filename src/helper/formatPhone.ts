@@ -16,12 +16,15 @@ export const formatPhone = (value: string) => {
   if (digits.length > 0) {
     withDashes += digits.slice(0, 2);
   }
+
   if (digits.length >= 3) {
     withDashes += ") " + digits.slice(2, 5);
   }
+
   if (digits.length >= 6) {
     withDashes += " - " + digits.slice(5, 7);
   }
+
   if (digits.length >= 8) {
     withDashes += " - " + digits.slice(7, 9);
   }
@@ -31,12 +34,15 @@ export const formatPhone = (value: string) => {
   if (digits.length > 0) {
     withoutDashes += digits.slice(0, 2);
   }
+
   if (digits.length >= 3) {
     withoutDashes += ") " + digits.slice(2, 5);
   }
+
   if (digits.length >= 6) {
     withoutDashes += " " + digits.slice(5, 7);
   }
+  
   if (digits.length >= 8) {
     withoutDashes += " " + digits.slice(7, 9);
   }

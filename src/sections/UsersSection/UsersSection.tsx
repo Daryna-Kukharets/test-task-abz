@@ -46,6 +46,7 @@ export const UsersSection: React.FC<Props> = ({ onResetToFirstPage }) => {
 
     try {
       const data: UsersResponse = await fetchUsersFirstPage(1, count);
+      
       if (data.success) {
         setUsers(data.users);
         setTotalPages(data.total_pages);

@@ -24,10 +24,7 @@ export interface UsersResponse {
   users: User[];
 }
 
-export const fetchUsers = (url: string) => fetchData<UsersResponse>(url);
-
-export const fetchUsersFirstPage = (page = 1, count = 6) => {
-  const url = `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${page}&count=${count}`;
-
-  return fetchUsers(url);
-}
+export const fetchUsersFirstPage = (page = 1, count = 6) =>
+  fetchData<UsersResponse>(
+    `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${page}&count=${count}`
+  );

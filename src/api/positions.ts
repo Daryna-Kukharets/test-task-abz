@@ -11,8 +11,7 @@ export type PositionsResponse = {
   message?: string;
 };
 
-export const fetchPositions = async (): Promise<PositionsResponse> => {
-  return fetchData<PositionsResponse>(
+export const fetchPositions = () =>
+  fetchData<PositionsResponse>(
     "https://frontend-test-assignment-api.abz.agency/api/v1/positions"
   );
-};

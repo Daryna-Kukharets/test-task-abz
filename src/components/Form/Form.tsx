@@ -41,8 +41,12 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     for (const field of fields) {
       const value = (formData as any)[field];
       const error = await validateField(field, value);
+
       setErrors((prev) => ({ ...prev, [field]: error }));
-      if (error) valid = false;
+    
+      if (error) {
+        valid = false;
+      }
     }
 
     return valid;
@@ -56,6 +60,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     setTouchedFields((prev) => ({ ...prev, [name]: true }));
 
     const error = await validateField(name, formattedValue);
+   
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
@@ -64,6 +69,7 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     setTouchedFields((prev) => ({ ...prev, photo: true }));
 
     const error = await validateField("photo", file);
+    
     setErrors((prev) => ({ ...prev, photo: error }));
   };
 
@@ -92,7 +98,6 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
     try {
       setLoading(true);
       const token = await getToken();
-
       const userData = {
         name: formData.name,
         email: formData.email,
@@ -100,7 +105,6 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
         position_id: Number(formData.positionId),
         photo: formData.photo!,
       };
-
       const response = await registerUser(userData, token);
 
       if (response.success) {
@@ -124,8 +128,10 @@ export const Form: React.FC<Props> = ({ onUserRegistered }) => {
 
   const isFormValid = () => {
     const requiredFields = ["name", "email", "phone", "photo", "positionId"];
+   
     return requiredFields.every((field) => {
       const value = (formData as any)[field];
+      
       return value && value.toString().trim() !== "" && !errors[field];
     });
   };

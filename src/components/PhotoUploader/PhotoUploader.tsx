@@ -12,6 +12,7 @@ export const PhotoUploader: React.FC<Props> = ({ onChange, value, error }) => {
   useEffect(() => {
     if (value) {
       const url = URL.createObjectURL(value);
+     
       setPreview(url);
 
       return () => URL.revokeObjectURL(url);
@@ -22,6 +23,7 @@ export const PhotoUploader: React.FC<Props> = ({ onChange, value, error }) => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
+    
     onChange(file);
   };
 

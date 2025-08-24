@@ -12,6 +12,7 @@ export const validateField = async (name: string, value: any) => {
 
     case "email":
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
       if (!value.trim()) {
         error = "Email is required";
       } else if (value !== value.toLowerCase()) {
@@ -23,6 +24,7 @@ export const validateField = async (name: string, value: any) => {
 
     case "phone":
       const phoneDigits = value.replace(/\D/g, "");
+
       if (!value.trim()) {
         error = "Phone is required";
       } else if (phoneDigits.length < 12) {
@@ -31,27 +33,33 @@ export const validateField = async (name: string, value: any) => {
       break;
 
     case "photo":
-      if (!value) error = "Photo is required";
-      else {
+      if (!value) {
+        error = "Photo is required";
+      } else {
         const file = value as File;
         const validTypes = ["image/jpeg", "image/jpg"];
-        if (!validTypes.includes(file.type))
+
+        if (!validTypes.includes(file.type)) {
           error = "Photo must be JPG/JPEG format";
-        else if (file.size > 5 * 1024 * 1024)
+        } else if (file.size > 5 * 1024 * 1024) {
           error = "Photo size must not exceed 5MB";
-        else {
+        } else {
           await new Promise<void>((resolve) => {
             const img = new Image();
+
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-              if (img.width < 70 || img.height < 70)
+              if (img.width < 70 || img.height < 70) {
                 error = "Photo resolution must be at least 70x70px";
+              }
+
               URL.revokeObjectURL(img.src);
               resolve();
             };
           });
         }
       }
+
       break;
   }
 

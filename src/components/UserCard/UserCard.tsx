@@ -19,8 +19,11 @@ export const UserCard: React.FC<Props> = ({ user }) => {
   });
 
   const checkOverflow = (ref: React.RefObject<HTMLParagraphElement | null>) => {
-    if (!ref.current) return false;
+    if (!ref.current) {
+      return false;
+    }
     const el = ref.current;
+    
     return Math.ceil(el.scrollWidth) > Math.ceil(el.clientWidth);
   };
 

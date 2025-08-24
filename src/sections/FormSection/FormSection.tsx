@@ -5,6 +5,7 @@ import success from "../../assets/success.svg"
 type Props = {
   onUserRegistered: () => void;
 };
+
 export const FormSection: React.FC<Props> = ({ onUserRegistered }) => {
   const [isRegistered, setIsRegistered] = useState(false);
 
